@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.I2cAddr;
@@ -19,11 +20,13 @@ public class Hardware {
 
     HardwareMap hwMap;
 
+    public CRServo intake = null;
+    public DcMotor motor1 = null;
+
     /**
      * Constructor to set up the Hardwaremap
      */
     public Hardware() {
-
         hwMap = null;
     }
 
@@ -36,5 +39,9 @@ public class Hardware {
     public void init(HardwareMap ahwMap, boolean auto) {
         // Save reference to Hardware map
         hwMap = ahwMap;
+
+        intake = hwMap.crservo.get("intake");
+        motor1 = hwMap.dcMotor.get("motor1");
+        //intake = hwMap.servo.get("intake");
     }
 }
