@@ -19,6 +19,9 @@ public class Hardware {
 
     HardwareMap hwMap;
 
+    public DcMotor driveMotor;
+    public Servo servo;
+
     /**
      * Constructor to set up the Hardwaremap
      */
@@ -36,5 +39,8 @@ public class Hardware {
     public void init(HardwareMap ahwMap, boolean auto) {
         // Save reference to Hardware map
         hwMap = ahwMap;
+        driveMotor = hwMap.dcMotor.get("driveMotor");
+        servo = hwMap.servo.get("servo");
+
     }
 }
