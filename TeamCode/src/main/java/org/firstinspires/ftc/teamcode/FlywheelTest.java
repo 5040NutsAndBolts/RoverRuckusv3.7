@@ -8,37 +8,48 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="Flywheel Test", group="Linear Opmode")
 public class FlywheelTest extends LinearOpMode {
-    Servo linActuator = null;
-    DcMotor wheelSpinner = null;
+    //Servo linActuator = null;
+    DcMotor wheelSpinnerClkWise = null;
+    DcMotor wheelSpinnerCoClWise = null;
     ColorSensor iBaller = null;
 
-    private final double goldSpeed = 1;
-    private final double silverSpeed = 0.5;
+    private double goldSpeed = 1;
+    private double silverSpeed = 0.5;
 
-    // These next to values are temporary
-    private final double YELLOW_VALUE = 1.0;
-    private final double WHITE_VALUE = 1.0;
+    // These next values are temporary
+    private double yellowValue = 1.0;
+    private double whiteValue = 1.0;
+    private double goldLinActPos = 1.0;
+    private double silvLinActPos = 0.5;
 
     public void runOpMode(){
-        linActuator = hardwareMap.servo.get("armExtension");
-        linActuator.setPosition(0);
-        wheelSpinner = hardwareMap.dcMotor.get("flySpin");
-        iBaller = hardwareMap.colorSensor.get("colorSensor");
+        //linActuator = hardwareMap.servo.get("armExtension");
+        //linActuator.setPosition(0);
+        wheelSpinnerClkWise = hardwareMap.dcMotor.get("flySpinA");
+        wheelSpinnerCoClWise = hardwareMap.dcMotor.get("flySpinB");
+        iBaller = hardwareMap.get(ColorSensor.class,"colorSensor");
 
         waitForStart();
         while(opModeIsActive()) {
-            /*Flywheel:
-                If color sensor shows
-                  -white, actuator goes down and flywheels slow down
-                  -yellow, actuator goes up and flywheels go quicker
-            */
-            wheelSpinner.setPower(0);
-            if (iBaller.red() >= YELLOW_VALUE && iBaller.green() >= YELLOW_VALUE){
-                wheelSpinner.setPower(goldSpeed);
+            /* Flywheel:
+             *   If color sensor shows
+             *     -white, actuator goes down and flywheels slow down
+             *     -yellow, actuator goes up and flywheels go quicker
+             * NO SERVO
+             * 2 MOTORS FOR TESTING, GOING IN OPPOSITE DIRECTIONS
+             */
 
-            } else if (iBaller.red() >= WHITE_VALUE && iBaller.green() >= WHITE_VALUE && iBaller.blue() >= WHITE_VALUE){
-                wheelSpinner.setPower(silverSpeed);
-            }
+            /*if (iBaller.red() >= yellowValue && iBaller.green() >= yellowValue){
+                wheelSpinnerClkWise.setPower(goldSpeed);
+                wheelSpinnerCoClWise.setPower(-goldSpeed);
+                // Linear actuator goes down
+            } else if (iBaller.red() >= whiteValue && iBaller.green() >= whiteValue && iBaller.blue() >= whiteValue){
+                wheelSpinnerClkWise.setPower(silverSpeed);
+                wheelSpinnerCoClWise.setPower(-silverSpeed);
+                // Linear actuator goes up
+            }*/
+            wheelSpinnerClkWise.setPower(1);
+            wheelSpinnerCoClWise.setPower(-1);
         }
     }
 }
